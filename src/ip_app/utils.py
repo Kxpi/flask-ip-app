@@ -1,25 +1,19 @@
 """Module with functions used for database related operations"""
-from .models import IP
-from .extensions import db
+from typing import Iterator
+
+from ip_app.db import redis_client, REDIS_SET_NAME
 
 
-def check_for_ip(client_ip: str) -> bool:
+def add_ip(client_ip: str) -> None:
     """
-    Check if IP doesn't exist already in database
+    Add record with IP address to database.
     """
-    return bool(db.session.query(IP).filter_by(ip_addr = client_ip).first())
+    redis_client.sadd(REDIS_SET_NAME, client_ip)
 
 
-def insert_ip(client_ip: str):
+def get_all_ips() -> Iterator[str]:
     """
-    Add record with IP address to database 
+    Return all records stored in database.
     """
-    new_record = IP(client_ip)
-    db.session.add(new_record)
-
-
-def get_all_ips(accept_header: str) -> str:
-    """
-    Return all records stored in database in given format
-    """
-    return accept_header
+    for ip in redis_client.smembers(REDIS_SET_NAME):
+        yield ip.decode('utf-8')
