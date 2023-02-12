@@ -60,21 +60,21 @@ def get_ip_list() -> Response:
     if accept_header in ['text/xml', 'application/xml']:
         logging.info('%s - returning list in XML format', client_ip)
         ip_list_xml = '<list>\n' + ''.join(f'<String>{ip}</String>\n' for ip in get_all_ips()) + '</list>' # pylint: disable=C0301
-        return ip_list_xml
+        return Response(response = ip_list_xml, status = 200)
 
     if accept_header in ['text/yaml', 'text/x-yaml', 'application/x-yaml']:
         logging.info('%s - returning list in YAML format', client_ip)
         ip_list_yaml = 'ip_addresses:\n' + ''.join(f'  - {ip}\n' for ip in get_all_ips())
-        return ip_list_yaml
+        return Response(response = ip_list_yaml, status = 200)
 
     if accept_header == 'text/html':
         logging.info('%s - returning list in HTML format', client_ip)
         ip_list_html = '<html><body><ul>' + ''.join(f'<li>{ip}</li>' for ip in get_all_ips()) + '</ul></body></html>' # pylint: disable=C0301
-        return ip_list_html
+        return Response(response = ip_list_html, status = 200)
 
     logging.info('%s - returning list in plain text', client_ip)
     ip_list_txt = ''.join(f'{ip}\n' for ip in get_all_ips())
-    return ip_list_txt
+    return Response(response = ip_list_txt, status = 200)
 
 
 @api.route('/probe', methods=['GET'])

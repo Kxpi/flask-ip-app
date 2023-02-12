@@ -4,7 +4,7 @@ FROM python:3.10-slim AS builder
 WORKDIR /app
 
 # Retrieve application dependencies.
-COPY ip_app/requirements.txt .
+COPY requirements.txt .
 
 # install dependencies
 RUN pip3 install --disable-pip-version-check -r requirements.txt --target .

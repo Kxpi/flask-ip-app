@@ -24,19 +24,19 @@ spec:
       - name: flask-app
         image: kxpic/ip-app
         imagePullPolicy: IfNotPresent
-        readinessProbe: 
-          httpGet: 
-            path: /probe
-            port: 5000 
-          periodSeconds: 5
-          failureThreshold: 20
-        livenessProbe:
-          httpGet:
-            path: /probe
-            port: 5000
-          periodSeconds: 10
-          failureThreshold: 1
-          initialDelaySeconds: 20
+        #readinessProbe: 
+        #  httpGet: 
+        #    path: /probe
+        #    port: 5000 
+        #  periodSeconds: 5
+        #  failureThreshold: 20
+        #livenessProbe:
+        #  httpGet:
+        #    path: /probe
+        #    port: 5000
+        #  initialDelaySeconds: 30
+        #  periodSeconds: 15
+        #  failureThreshold: 1
         envFrom:
           - configMapRef:
               name: app-config
