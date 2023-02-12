@@ -15,5 +15,5 @@ def get_all_ips() -> Iterator[str]:
     """
     Return all records stored in database.
     """
-    for ip in redis_client.smembers(REDIS_SET_NAME):
+    for ip in redis_client.smembers(REDIS_SET_NAME): # pylint: disable=C0103
         yield ip.decode('utf-8')
