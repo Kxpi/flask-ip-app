@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-deploy
+  namespace: ip-app
+  labels:
+    app: ip-app
+    name: flask-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ip-app
+      name: flask-app
+  template:
+    metadata:
+      name: flask-app
+      labels:
+        app: ip-app
+        name: flask-app
+    spec:
+      containers:
+      - name: flask-app
+        image: kxpic/ip-app
+        imagePullPolicy: IfNotPresent
+        readinessProbe: 
+          httpGet: 
+            path: /get-ip
+            port: 5000 
+          periodSeconds: 5
+          failureThreshold: 20
+        livenessProbe:
+          httpGet:
+            path: /get-ip
+            port: 5000
+          periodSeconds: 10
+          failureThreshold: 1
+          initialDelaySeconds: 20
+        envFrom:
+          - configMapRef:
+              name: app-config
+        ports:
+        - containerPort: 5000

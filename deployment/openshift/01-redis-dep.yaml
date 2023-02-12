@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deploy
+  namespace: ip-app
+  labels:
+    app: ip-app
+    name: redis-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ip-app
+      name: redis-db
+  template:
+    metadata:
+      name: redis-db
+      labels:
+        app: ip-app
+        name: redis-db
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 6379

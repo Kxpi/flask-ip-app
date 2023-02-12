@@ -75,3 +75,11 @@ def get_ip_list() -> Response:
     logging.info('%s - returning list in plain text', client_ip)
     ip_list_txt = ''.join(f'{ip}\n' for ip in get_all_ips())
     return ip_list_txt
+
+
+@api.route('/probe', methods=['GET'])
+def probe() -> Response:
+    """
+    Endpoint for health check done by liveness and readiness probes
+    """
+    return 200
