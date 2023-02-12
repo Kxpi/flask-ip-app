@@ -26,13 +26,13 @@ spec:
         imagePullPolicy: IfNotPresent
         readinessProbe: 
           httpGet: 
-            path: /get-ip
+            path: /probe
             port: 5000 
           periodSeconds: 5
           failureThreshold: 20
         livenessProbe:
           httpGet:
-            path: /get-ip
+            path: /probe
             port: 5000
           periodSeconds: 10
           failureThreshold: 1

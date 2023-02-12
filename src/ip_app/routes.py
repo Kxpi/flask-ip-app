@@ -82,4 +82,4 @@ def probe() -> Response:
     """
     Endpoint for health check done by liveness and readiness probes
     """
-    return 200
+    return Response(response = 'OK', status = 200)
