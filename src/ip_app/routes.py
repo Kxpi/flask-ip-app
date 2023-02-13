@@ -2,7 +2,7 @@
 import logging
 from flask import request, Blueprint, Response
 
-from ip_app.utils import add_ip, get_all_ips
+from ip_app.db_redis import add_ip, get_all_ips
 
 
 api = Blueprint('api', __name__)
@@ -27,18 +27,21 @@ def get_client_ip() -> Response:
     # send response appropriate for each accept header
     if accept_header in ['text/xml', 'application/xml']:
         logging.info('%s - returning XML format', client_ip)
-        return f'<client_ip>{client_ip}</client_ip>'
+        ip_xml = f'<client_ip>{client_ip}</client_ip>'
+        return Response(response = ip_xml, status = 200, mimetype = accept_header)
 
     if accept_header in ['text/yaml', 'text/x-yaml', 'application/x-yaml']:
         logging.info('%s - returning YAML format', client_ip)
-        return f'client_ip: {client_ip}'
+        ip_yaml = f'client_ip: {client_ip}'
+        return Response(response = ip_yaml, status = 200, mimetype = accept_header)
 
     if accept_header == 'text/html':
         logging.info('%s - returning HTML format', client_ip)
-        return f'<html><body><p>{client_ip}</p></body></html>'
+        ip_html = f'<html><body><p>{client_ip}</p></body></html>'
+        return Response(response = ip_html, status = 200, mimetype = accept_header)
 
     logging.info('%s - returning plain text', client_ip)
-    return client_ip
+    return Response(response = client_ip, status = 200, mimetype = accept_header)
 
 
 @api.route('/get-ip-list', methods=['GET'])
@@ -60,26 +63,27 @@ def get_ip_list() -> Response:
     if accept_header in ['text/xml', 'application/xml']:
         logging.info('%s - returning list in XML format', client_ip)
         ip_list_xml = '<list>\n' + ''.join(f'<String>{ip}</String>\n' for ip in get_all_ips()) + '</list>' # pylint: disable=C0301
-        return Response(response = ip_list_xml, status = 200)
+        return Response(response = ip_list_xml, status = 200, mimetype = accept_header)
 
     if accept_header in ['text/yaml', 'text/x-yaml', 'application/x-yaml']:
         logging.info('%s - returning list in YAML format', client_ip)
         ip_list_yaml = 'ip_addresses:\n' + ''.join(f'  - {ip}\n' for ip in get_all_ips())
-        return Response(response = ip_list_yaml, status = 200)
+        return Response(response = ip_list_yaml, status = 200, mimetype = accept_header)
 
     if accept_header == 'text/html':
         logging.info('%s - returning list in HTML format', client_ip)
         ip_list_html = '<html><body><ul>' + ''.join(f'<li>{ip}</li>' for ip in get_all_ips()) + '</ul></body></html>' # pylint: disable=C0301
-        return Response(response = ip_list_html, status = 200)
+        return Response(response = ip_list_html, status = 200, mimetype = accept_header)
 
     logging.info('%s - returning list in plain text', client_ip)
     ip_list_txt = ''.join(f'{ip}\n' for ip in get_all_ips())
-    return Response(response = ip_list_txt, status = 200)
+    return Response(response = ip_list_txt, status = 200, mimetype = accept_header)
 
 
-@api.route('/probe', methods=['GET'])
-def probe() -> Response:
+@api.route('/health', methods=['GET'])
+def health() -> Response:
     """
-    Endpoint for health check done by liveness and readiness probes
+    Endpoint for health check done by liveness and readiness probes.
     """
+    logging.info('Health check')
     return Response(response = 'OK', status = 200)
