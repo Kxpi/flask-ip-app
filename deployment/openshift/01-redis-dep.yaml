@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deploy
+  namespace: ip-app
+  labels:
+    app: ip-app
+    name: redis-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ip-app
+      name: redis-db
+  template:
+    metadata:
+      name: redis-db
+      labels:
+        app: ip-app
+        name: redis-db
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 250m
+            memory: 512Mi
+        readinessProbe:
+          exec:
+            command:
+              - redis-cli
+              - ping
+          periodSeconds: 5
+          failureThreshold: 20
+        livenessProbe:
+          exec:
+            command:
+              - redis-cli
+              - ping
+          periodSeconds: 10
+          failureThreshold: 1
+          initialDelaySeconds: 30
+        ports:
+        - containerPort: 6379
+      restartPolicy: Always
