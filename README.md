@@ -83,4 +83,4 @@ kxpic/ip-app                  distroless   497f44f22366   18 minutes ago   76.1M
 ## Issues, notes, thoughts
 - For Openshift, I could probably use Route as a way to access the app - unfortunatelly I didn't have the proper environment so I didn't want use it just because 'I think it will work'. Access using NodePort will still work fine though.
 
-- As of this commit, my readinessProbe and livenessProbe for Flask fail with 404 code when using ```/health-check``` endpoint, but work for other ones. I tried rebuilding it with no-cache option to make sure latest changes are on the image but it didn't help.
+- <s>As of this commit, my readinessProbe and livenessProbe for Flask fail with 404 code when using ```/health-check``` endpoint, but work for other ones. I tried rebuilding it with no-cache option to make sure latest changes are on the image but it didn't help.</s>
