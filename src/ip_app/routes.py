@@ -80,10 +80,9 @@ def get_ip_list() -> Response:
     return Response(response = ip_list_txt, status = 200, mimetype = accept_header)
 
 
-@api.route('/health', methods=['GET'])
-def health() -> Response:
+@api.route('/health-check', methods=['GET'])
+def health_check() -> Response:
     """
     Endpoint for health check done by liveness and readiness probes.
     """
-    logging.info('Health check')
     return Response(response = 'OK', status = 200)

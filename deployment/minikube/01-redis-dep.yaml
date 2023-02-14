@@ -44,7 +44,7 @@ spec:
               - redis-cli
               - ping
           periodSeconds: 10
-          failureThreshold: 1
+          failureThreshold: 3
           initialDelaySeconds: 30
         ports:
         - containerPort: 6379

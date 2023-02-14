@@ -9,11 +9,11 @@ This project is nothing more than a Flask app that runs on port `5000` with two 
 
 ```/get-ip-list``` - returns a list of IP addresses that have queried the app in the past
 
-There is also a third endpoint - ```/health-check``` - it was specifically made for livenessProbe done by k8s and doesn't provide any functionality.
+There is also a third endpoint - ```/health-check``` - it was specifically made for livenessProbe and readinessProbe done by k8s and doesn't provide any functionality.
 
 Those IP addresses are stored in Redis, which is used as primary storage, in form of a set with unique records. Redis deployment isn't a proper production-grade Redis cluster with master, replication, etc. it's just a simple pod deployment without any additional configuration - the app is basic and not aimed for production purposes, thus made this way. Features like basic event logging and exception handling were implemented too.
 
-Accept headers in HTTP request are respected and based on received header, different formats will be returned. For any unsupported format, the response will be in `text/plain` 
+Accept headers in HTTP request are respected and based on received header, different formats will be returned.
 
 Supported formats are:
 - **xml**  - `text/xml`, `application/xml`
@@ -21,7 +21,9 @@ Supported formats are:
 - **yaml** - `text/html`
 - **txt**  - `text/plain`
 
-App supports rate limiting per client IP address - it is set by default to **15 requests per minute** for all endpoints.
+For any other, unsupported format, the response will be in `text/plain`.
+
+App supports rate limiting per client IP address - it is set by default to **20 requests per minute** for all endpoints.
 
 ## Prerequisites
 Personally, I run and tested the app on `minikube`. If you don't have a proper cluster at your disposal, I suggest to [set up minikube](https://minikube.sigs.k8s.io/docs/start/) as it is probably the fastest way to get it running.
@@ -74,8 +76,8 @@ Other directories in [/deployment](./deployment) contain roughly the same manife
 ## Optimizing Docker image
 By using multi-stage build and distroless **python3** image in [Dockerfile](./src/Dockerfile), I managed to drop down the size of the image down to 76.1MB
 ```
-REPOSITORY                    TAG       IMAGE ID       CREATED        SIZE
-kxpic/ip-app                  latest    3d14a3cbbcdd   14 hours ago   76.1MB
+REPOSITORY                    TAG          IMAGE ID       CREATED          SIZE
+kxpic/ip-app                  distroless   497f44f22366   18 minutes ago   76.1MB
 ```
 
 ## Issues, notes, thoughts
