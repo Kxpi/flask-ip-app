@@ -77,12 +77,12 @@ oc apply -f deployment/openshift/
 ---
 
 ## Helm
-You can also install helm repo using those commands:
+You can also install helm repo using those commands (helm v3):
 ```
 helm repo add flask-ip-app https://kxpi.github.io/flask-ip-app/
 helm install flask-ip-app/flask-ip-app --create-namespace --generate-name
 ```
-After these steps, if done on ```minikube```, accessing will look exaclty the same as above.
+After these steps, accessing will look exaclty the same as described in previous section, but installing using helm **doesn't create a LoadBalancer for app, only NodePort**. This was done in case of running it on something else than ```minikube```, where the LoadBalancer might be unavailable.
 
 ---
 
