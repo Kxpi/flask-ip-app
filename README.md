@@ -1,6 +1,6 @@
 # Flask IP app
 ## About
-Web app designed to return an IP address of requesting client or list of IP's that queried the app in the past. Dockerized and ready for deployment on Kubernetes or Openshift. For storage I went with Redis in persistent mode (AOF).
+Web app designed to return an IP address of requesting client or list of IP's that queried the app in the past. Dockerized and ready for deployment on Kubernetes or Openshift. Image is publicly available on docker hub under name ```kxpic/flask-ip-app```. For storage I went with Redis in persistent mode (AOF).
 
 ---
 
