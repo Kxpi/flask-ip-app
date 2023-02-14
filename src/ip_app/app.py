@@ -7,10 +7,6 @@ from flask_limiter.util import get_remote_address
 from ip_app.routes import api
 
 
-# initial query when starting an app and connecting to database
-INIT_QUERY = 'CREATE TABLE IF NOT EXISTS ip_addresses(ip_addr VARCHAR(16) UNIQUE)'
-
-
 def create_app():
     """
     Creates and configures the app.

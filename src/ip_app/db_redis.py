@@ -1,7 +1,6 @@
 """Module with functions used for database related operations."""
 import logging
 from os import environ
-from socket import gaierror
 from typing import Iterator
 from redis import Redis, ConnectionPool, exceptions
 
