@@ -5,7 +5,7 @@ Web app designed to return an IP address of requesting client or list of IP's th
 ---
 
 ## Description
-This project basically a Flask app running on port `5000` with two main API endpoints: 
+This project is basically a Flask app running on port `5000` with two main API endpoints: 
 
 ```/get-ip``` - returns an IP address of requesting client
 
