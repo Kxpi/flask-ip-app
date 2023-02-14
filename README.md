@@ -19,8 +19,8 @@ Accept headers in HTTP request are respected and based on received header, diffe
 
 Supported formats are:
 - **xml**  - `text/xml`, `application/xml`
-- **html** - `text/yaml`, `text/x-yaml`, `application/x-yaml`
-- **yaml** - `text/html`
+- **yaml** - `text/yaml`, `text/x-yaml`, `application/x-yaml`
+- **html** - `text/html`
 - **txt**  - `text/plain`
 
 For any other, unsupported format, the response will be in `text/plain`.
