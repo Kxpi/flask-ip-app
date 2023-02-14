@@ -1,18 +1,19 @@
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: redis-deploy
+  name: redis-sts
   namespace: ip-app
   labels:
     app: ip-app
-    name: redis-deploy
+    name: redis-sts
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: ip-app
       name: redis-db
+  serviceName: redis
   template:
     metadata:
       name: redis-db
@@ -20,10 +21,18 @@ spec:
         app: ip-app
         name: redis-db
     spec:
+      volumes:
+        - name: redis-volume
+          persistentVolumeClaim:
+            claimName: redis-pvc
       containers:
       - name: redis
         image: redis
         imagePullPolicy: IfNotPresent
+        command: ['redis-server', '--appendonly', 'yes']
+        volumeMounts:
+          - name: redis-volume
+            mountPath: /data
         resources:
           requests:
             cpu: 100m

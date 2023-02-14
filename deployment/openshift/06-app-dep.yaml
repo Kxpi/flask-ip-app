@@ -41,13 +41,13 @@ spec:
             path: /health-check
             port: 5000
           initialDelaySeconds: 10
-          periodSeconds: 20
-          failureThreshold: 30
+          periodSeconds: 10
+          failureThreshold: 3
         livenessProbe:
           httpGet:
             path: /health-check
             port: 5000
-          initialDelaySeconds: 20
-          periodSeconds: 20
-          failureThreshold: 1
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          failureThreshold: 3
       restartPolicy: Always
