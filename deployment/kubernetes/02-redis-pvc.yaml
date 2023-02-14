@@ -1,0 +1,16 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: redis-pvc
+  namespace: ip-app
+  labels:
+    app: ip-app
+    name: redis-pvc
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany 
+  resources:
+    requests:
+      storage: 1Gi

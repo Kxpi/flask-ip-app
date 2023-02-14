@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: kxpic/ip-app
+        image: kxpic/flask-ip-app
         imagePullPolicy: IfNotPresent
         resources:
           requests:
@@ -38,16 +38,16 @@ spec:
         - containerPort: 5000
         readinessProbe: 
           httpGet: 
-            path: /get-ip
+            path: /health-check
             port: 5000
-          initialDelaySeconds: 5
+          initialDelaySeconds: 10
           periodSeconds: 10
-          failureThreshold: 30
+          failureThreshold: 3
         livenessProbe:
           httpGet:
-            path: /get-ip
+            path: /health-check
             port: 5000
           initialDelaySeconds: 30
-          periodSeconds: 20
-          failureThreshold: 1
-      restartPolicy: OnFailure
+          periodSeconds: 15
+          failureThreshold: 3
+      restartPolicy: Always
