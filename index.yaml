@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  flask-ip-app:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-02-14T03:42:00.675024525+01:00"
+    description: A Helm chart for Kubernetes
+    digest: 593007a3922c98f76d512b6827f313861e29b87980b47192d1fc3b5b3747372f
+    name: flask-ip-app
+    type: application
+    urls:
+    - https://kxpi.github.io/flask-ip-app/flask-ip-app-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-02-14T03:42:00.674308774+01:00"
